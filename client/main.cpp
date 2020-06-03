@@ -1,6 +1,7 @@
 #pragma comment(lib, "Ws2_32.lib")
 
 #include <WinSock2.h>
+#include <Winuser.h>
 #include <iostream>
 #include <thread>
 #include <string>
@@ -30,7 +31,19 @@ int main()
   if (confirm == "N") {
     exit(1);
   } else {
+<<<<<<< HEAD
       listener.startListening();
+=======
+      StopAllThreads sat;
+      // Create thread pool
+      ThreadPool tp;
+      tp.setThread(&sat);
+      
+      cout << "ends!" << endl;
+      while(1) {
+
+      }
+>>>>>>> a4dec58... Before merge to refactor
   }
   return 0;
 }
