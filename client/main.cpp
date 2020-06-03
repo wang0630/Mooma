@@ -31,19 +31,7 @@ int main()
   if (confirm == "N") {
     exit(1);
   } else {
-<<<<<<< HEAD
       listener.startListening();
-=======
-      StopAllThreads sat;
-      // Create thread pool
-      ThreadPool tp;
-      tp.setThread(&sat);
-      
-      cout << "ends!" << endl;
-      while(1) {
-
-      }
->>>>>>> a4dec58... Before merge to refactor
   }
   return 0;
 }
