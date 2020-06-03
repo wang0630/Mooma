@@ -31,15 +31,6 @@ int main()
     exit(1);
   } else {
       listener.startListening();
-      // StopAllThreads sat;
-      // // Create thread pool
-      // ThreadPool tp;
-      // tp.setThread(&sat);
-      
-      // cout << "ends!" << endl;
-      // while(1) {
-        
-      // }
   }
   return 0;
 }

@@ -4,6 +4,8 @@
 #include <memory>
 #include <iostream>
 #include <array>
+#include "ThreadPool.h"
+#include "StopAllThreads.h"
 
 #define PORT_NUM (6666)
 #define IP_ADDR ("127.0.0.1")
@@ -23,5 +25,6 @@ public:
   ~CommandListener();
   void startListening();
   void setupSocket();
+  void handleCommand(const char* cmd);
   string executeCommand(const char* cmd);
 };
