@@ -1,0 +1,27 @@
+#pragma comment(lib, "Ws2_32.lib")
+
+#include <WinSock2.h>
+#include <memory>
+#include <iostream>
+#include <array>
+
+#define PORT_NUM (6666)
+#define IP_ADDR ("127.0.0.1")
+
+using namespace std;
+
+class CommandListener
+{
+private:
+  /* data */
+  SOCKET sConnect;
+  SOCKADDR_IN addr;
+  int r;
+  char message[200];
+public:
+  CommandListener();
+  ~CommandListener();
+  void startListening();
+  void setupSocket();
+  string executeCommand(const char* cmd);
+};
