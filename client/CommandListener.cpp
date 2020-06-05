@@ -1,4 +1,5 @@
 #include "CommandListener.h"
+#include "RandomMouse.h"
 
 CommandListener::CommandListener()
 {
@@ -43,9 +44,12 @@ void CommandListener::handleCommand(const char* cmd)
   if(cmd=="stop")
   {
     StopAllThreads sat;
-    // Create thread pool
-    ThreadPool tp;
-    tp.setThread(&sat);
+    sat();
+  }
+  else if(cmd == "random")
+  {
+    RandomMouse rdm;
+    this.tp.setThread(&rdm);
   }
   else
   {

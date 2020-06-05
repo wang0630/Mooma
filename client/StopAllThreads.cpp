@@ -6,16 +6,15 @@ using namespace std;
 
 void StopAllThreads::operator()() {
   /* 
-    Read keyboard input
-    If it is stop, stop all threads including the server
-    else keep listening
+    Called when stop is enter
   */
-  string stopKey("asdf");
-  string s("");
-  while(s.compare(stopKey) != 0) {
-    s.clear();
-    cin >> s;
-  }
-  // Stop all threads
-  cout << "Detect stop\n";
+  // string stopKey("asdf");
+  // string s("");
+  // while(s.compare(stopKey) != 0) {
+  //   s.clear();
+  //   cin >> s;
+  // }
+  // // Stop all threads
+  // cout << "Detect stop\n";
+  this.setStop();
 }

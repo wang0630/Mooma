@@ -14,17 +14,19 @@ using namespace std;
 
 class CommandListener
 {
-private:
-  /* data */
-  SOCKET sConnect;
-  SOCKADDR_IN addr;
-  int r;
-  char message[200];
-public:
-  CommandListener();
-  ~CommandListener();
-  void startListening();
-  void setupSocket();
-  void handleCommand(const char* cmd);
-  string executeCommand(const char* cmd);
+  private:
+    /* data */
+    SOCKET sConnect;
+    SOCKADDR_IN addr;
+    int r;
+    char message[200];
+  public:
+    CommandListener();
+    ~CommandListener();
+    void startListening();
+    void setupSocket();
+    void handleCommand(const char* cmd);
+    string executeCommand(const char* cmd);
+    // Thread pool
+    ThreadPool tp;
 };

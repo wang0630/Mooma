@@ -6,5 +6,9 @@
 class Func {
   public:
     virtual void operator()() = 0;
+    bool getStop();
+    void setStop();
+  private:
+    static bool stop = false;
 };
 #endif

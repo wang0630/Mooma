@@ -3,8 +3,9 @@
 #include "RandomMouse.h"
 
 void RandomMouse::operator()() {
-  while(1) {
+  while(!this.getStop()) {
     srand(time(NULL));
-    SetCursorPos(rand(), rand());
+    // SetCursorPos(rand(), rand());
+    cout << "in random mouse" << endl;
   }
 }
