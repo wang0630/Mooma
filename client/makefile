@@ -1,24 +1,35 @@
-TARGET=a.exe
+# $(info obj is $(OBJ)) can be used for debug
+TARGET=build/a.exe
 ODIR=obj
-IDIR=include
+IDIR=header
 DDIR=dep
 SDIR=src
-# SRC = $(wildcard $(SDIR)/*.cpp)
-OBJ = $(SRC: $(ODIR)/%.o=$(SDIR)/%.cpp)
-DEP = $(SRC: $(DDIR)/%.d=$(SDIR)/%.cpp)
+# Src files
+SRC = $(wildcard $(SDIR)/*.cpp)
 
-# CXXVER=-std=c++11 -std=gnu++11
-# CXXFLAGS+=$(CXXVER) -MM -MF $(DDIR)/%.d -MP -I$(IDIR)
-# LDLIBS+=-lwsock32
+# Object files
+OBJ = $(patsubst $(SDIR)/%.cpp, $(ODIR)/%.o, $(SRC))
 
-# $(TARGET):	$(OBJ)
-# 	$(CXX) $^ -o $@ $(LDLIBS)
+# Automatic generated dependencies
+DEP = $(patsubst $(SDIR)/%.cpp, $(DDIR)/%.d, $(SRC))
 
-# $(ODIR)/%.o:	$(SDIR)/%.cpp
-# 	$(CXX) $(CXXLAGS) -c $< -o $@
+CXXVER=-std=c++11 -std=gnu++11
+# -Iheader specifies that all #include should look for target header in 'header' folder
+# -MF writes the auto generate dependencies into 'dep' folder
+# -MMD only re-compile when user-defined headers have been modified(do not watch system header like iostream or string.h)
+# Hence make the makefile faster since it watches fewer files now
+CXXFLAGS+=$(CXXVER) -MMD -MP -MF $(DDIR)/$*.d -I$(IDIR)
+LD =-lwsock32
 
-clean:
-	$(RM) $(ODIR)/*
+$(TARGET):	$(OBJ)
+	$(CXX) $^  -o $@ $(LD)
 
+$(ODIR)/%.o: $(SDIR)/%.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Include all dependencies in DEP folder
 -include $(DEP)
 
+# RM is default to 'rm -r'
+clean:
+	$(RM) $(ODIR)/* $(DDIR)/* build/* $(DDIR)/*

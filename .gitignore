@@ -1,3 +1,6 @@
 a.*
 .vscode
 main.exe
+obj/
+dep/
+build/

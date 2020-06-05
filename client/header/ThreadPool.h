@@ -1,3 +1,5 @@
+#ifndef THREAD_POOL_H_
+#define THREAD_POOL_H_
 #include <thread>
 #include <vector>
 #include <iostream>
@@ -11,3 +13,4 @@ class ThreadPool {
   private:
     vector<thread*> threadPool;
 };
+#endif

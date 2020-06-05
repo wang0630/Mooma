@@ -1,9 +1,12 @@
+#ifndef CMD_LISTENER_H_
+#define CMD_LISTENER_H_
 #pragma comment(lib, "Ws2_32.lib")
-
+// iostream must be included after winsock2.h
+// Github issue: https://github.com/nanomsg/nng/issues/554
 #include <WinSock2.h>
 #include <memory>
-#include <iostream>
 #include <array>
+#include <iostream>
 #include "ThreadPool.h"
 #include "StopAllThreads.h"
 
@@ -30,3 +33,4 @@ class CommandListener
     // Thread pool
     ThreadPool tp;
 };
+#endif

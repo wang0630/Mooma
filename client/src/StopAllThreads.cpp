@@ -16,5 +16,5 @@ void StopAllThreads::operator()() {
   // }
   // // Stop all threads
   // cout << "Detect stop\n";
-  this.setStop();
+  this->setStop();
 }

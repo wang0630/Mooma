@@ -9,6 +9,6 @@ class Func {
     bool getStop();
     void setStop();
   private:
-    static bool stop = false;
+    static bool stop;
 };
 #endif
