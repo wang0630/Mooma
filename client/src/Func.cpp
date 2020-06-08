@@ -1,6 +1,6 @@
 #include "Func.h"
 
-bool Func::stop = false;
+volatile bool Func::stop = false;
 
 bool Func::getStop() {
   return stop;
