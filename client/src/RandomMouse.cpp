@@ -8,9 +8,7 @@ using namespace std;
 void RandomMouse::operator()() {
   while(!this->getStop()) {
     srand(time(NULL));
-    Sleep(2000);
-    // cout << this->getStop() << endl;
-    SetCursorPos(rand() % 1500, rand() % 1500);
-    // cout << "in random mouse" << endl;
+    // Sleep(2000);
+    // SetCursorPos(rand() % 1500, rand() % 1500);
   }
 }

