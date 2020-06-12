@@ -14,6 +14,7 @@ def send_cmd():
     txt.insert('end', '\n')
 
 def update_hosts():
+    mooma.remove_disconnected()
     host_list.delete(0, tk.END)
     for item in mooma.socket_list:
         host_list.insert('end', item)

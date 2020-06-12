@@ -29,6 +29,17 @@ class MoomaServer():
         print(str(recv,encoding='utf-8',errors='ignore'))
         return str(recv,encoding='utf-8',errors='ignore')
 
+    def remove_disconnected(self):
+        remaining = []
+        for sock in self.socket_list:
+            try:
+                sock.send(bytes('CHECK_STATUS',encoding='gbk'))
+                sock.recv(1024)
+                remaining.append(sock)
+            except:
+                sock.close()
+        self.socket_list = remaining
+
     def run(self):
         self.start_listening()
         while True:
