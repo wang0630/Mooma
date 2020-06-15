@@ -3,7 +3,7 @@ import threading
 
 class MoomaServer():
     def __init__(self):
-        self.socket_list = []
+        self.connection_list = []
         self.hostname = '127.0.0.1'
         self.port = 6666 
         self.addr = (self.hostname, self.port)
@@ -13,7 +13,7 @@ class MoomaServer():
     def accept_connection(self): 
         while True:
             connect_socket,client_addr = self.srv.accept()
-            self.socket_list.append(connect_socket)
+            self.connection_list.append([connect_socket,client_addr])
             print('一位不願透漏姓名的熊頭前來捧場 : ' + str(client_addr))
     
     def start_listening(self):
@@ -31,21 +31,22 @@ class MoomaServer():
 
     def remove_disconnected(self):
         remaining = []
-        for sock in self.socket_list:
+        for connection in self.connection_list:
+            sock = connection[0]
             try:
                 sock.send(bytes('CHECK_STATUS',encoding='gbk'))
                 sock.recv(1024)
-                remaining.append(sock)
+                remaining.append(connection)
             except:
                 sock.close()
-        self.socket_list = remaining
+        self.connection_list = remaining
 
     def run(self):
         self.start_listening()
         while True:
             cmd = input()
-            for sock in self.socket_list:
-                self.send_command(sock, cmd)
+            for connection in self.connection_list:
+                self.send_command(connection[0], cmd)
 
 
 if __name__ == '__main__':
