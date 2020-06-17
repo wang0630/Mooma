@@ -25,7 +25,6 @@ class CommandListener
     char message[200];
   public:
     CommandListener();
-    ~CommandListener();
     void startListening();
     void setupSocket();
     void handleCommand(const char* cmd);

@@ -9,16 +9,23 @@ CommandListener::CommandListener()
   setupSocket();
 }
 
-CommandListener::~CommandListener()
-{
-
-}
-
 void CommandListener::startListening()
 {
-  connect(sConnect, (SOCKADDR*)&addr, sizeof(addr));
+  int err = connect(sConnect, (SOCKADDR*)&addr, sizeof(addr));
+  if (err) {
+    cout << "connect = " << err << endl;
+  }
   while (1) {
-    // cout << "Begin of the loop" << endl;
+    char err[8] = {0};
+    int size = sizeof(err);
+    int check = getsockopt(sConnect, SOL_SOCKET, SO_ERROR, err, &size);
+    int e;
+    memcpy(&e, err, sizeof(int));
+    cout << "err outside = " << e << endl;
+    if (!e) {
+      cout << "err = " << e << endl;
+      break;
+    }
     memset(message, 0, sizeof(message));
     r = recv(sConnect, message, sizeof(message), 0);
     if (r < 0)
@@ -28,7 +35,6 @@ void CommandListener::startListening()
       handleCommand(message);
   }
   closesocket(sConnect);
-
   getchar();
 }
 

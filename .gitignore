@@ -4,3 +4,4 @@ main.exe
 obj/
 dep/
 build/
+__pycache__

