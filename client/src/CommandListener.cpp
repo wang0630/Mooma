@@ -9,32 +9,29 @@ CommandListener::CommandListener()
   setupSocket();
 }
 
+void CommandListener::tryToConnect()
+{
+  int err = -1;
+  while(err < 0) {
+    err = connect(sConnect, (SOCKADDR*)&addr, sizeof(addr));
+  }
+}
+
 void CommandListener::startListening()
 {
-  int err = connect(sConnect, (SOCKADDR*)&addr, sizeof(addr));
-  if (err) {
-    cout << "connect = " << err << endl;
-  }
+  tryToConnect();
   while (1) {
-    char err[8] = {0};
-    int size = sizeof(err);
-    int check = getsockopt(sConnect, SOL_SOCKET, SO_ERROR, err, &size);
-    int e;
-    memcpy(&e, err, sizeof(int));
-    cout << "err outside = " << e << endl;
-    if (!e) {
-      cout << "err = " << e << endl;
-      break;
-    }
     memset(message, 0, sizeof(message));
     r = recv(sConnect, message, sizeof(message), 0);
-    if (r < 0)
-      cout << "Recv fails" << endl;
-    else
-      cout << message << endl;
+    if (r < 0) {
+      closesocket(sConnect);
+      setupSocket();
+      tryToConnect();
+    } else {
+      // cout << message << endl;
       handleCommand(message);
+    }
   }
-  closesocket(sConnect);
   getchar();
 }
 
