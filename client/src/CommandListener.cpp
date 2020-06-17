@@ -57,6 +57,12 @@ void CommandListener::handleCommand(const char* cmd)
     sat();
     // TO-DO exit the program
   }
+  else if(strcmp(cmd, "CHECK_STATUS") == 0)
+  {
+    char done[30] = "CONNECTED";
+    send(sConnect,done,(int)strlen(done),0);
+    return;
+  }
   else if(strcmp(cmd, "random") == 0)
   {
     RandomMouse rdm;
