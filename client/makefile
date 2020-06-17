@@ -1,17 +1,21 @@
 # $(info obj is $(OBJ)) can be used for debug
 TARGET=build/a.exe
+TARGET1=build/launch.exe
 ODIR=obj
 IDIR=header
 DDIR=dep
 SDIR=src
 # Src files
-SRC = $(wildcard $(SDIR)/*.cpp)
+ALLSRC = $(wildcard $(SDIR)/*.cpp)
+SRC = $(filter-out $(SDIR)/Launcher.cpp, $(ALLSRC))
+SRCLAUNCH = $(filter $(SDIR)/Launcher.cpp, $(ALLSRC))
 
 # Object files
 OBJ = $(patsubst $(SDIR)/%.cpp, $(ODIR)/%.o, $(SRC))
+OBJLAUNCH =  $(patsubst $(SDIR)/%.cpp, $(ODIR)/%.o, $(SRCLAUNCH))
 
 # Automatic generated dependencies
-DEP = $(patsubst $(SDIR)/%.cpp, $(DDIR)/%.d, $(SRC))
+DEP = $(patsubst $(SDIR)/%.cpp, $(DDIR)/%.d, $(ALLSRC))
 
 CXXVER=-std=c++11 -std=gnu++11
 # -Iheader specifies that all #include should look for target header in 'header' folder
@@ -21,8 +25,14 @@ CXXVER=-std=c++11 -std=gnu++11
 CXXFLAGS+=$(CXXVER) -MMD -MP -MF $(DDIR)/$*.d -I$(IDIR)
 LD =-lwsock32
 
-$(TARGET):	$(OBJ)
+all: $(TARGET) $(TARGET1)
+
+$(TARGET): $(OBJ)
 	$(CXX) $^  -o $@ $(LD)
+
+# For launcher
+$(TARGET1): $(OBJLAUNCH)
+	$(CXX) $^  -o $@ 
 
 $(ODIR)/%.o: $(SDIR)/%.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
